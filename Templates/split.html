@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Split
+{% endblock %}
+
+{% block main %}
+    <form method="post">
+        <div class="input-wrapper row">
+            <div class="col-2">
+                <input class="form-control" autocomplete="off" type="text" name="field[]" value="">
+            </div>
+            <div class="col-1">
+                <a href="javascript:void(0);" class="add-input" title="Add input"><img src="/static/img/add.png" width="20" height="20"></a>
+            </div>
+        </div>
+        <br>
+        <input type="submit" name="cmdsubmit">
+    </form>
+
+    <form action="/split" method="post">
+    </form>
+
+    <script>
+        $(document).ready(function(){
+            var max_input_fields = 10;
+            var add_input = $('.add-input');
+            var input_wrapper = $('.input-wrapper');
+            var new_input = '<div class="row"><div class="col-2"><input class="form-control" autocomplete="off" type="text" name="field[]" value=""></div><div class="col-1"><a href="javascript:void(0);" class="remove-input" title="Remove input"><img src="/static/img/remove.png" width="20" height="20"></a></div></div>';
+            var add_input_count = 1; 
+            $(add_input).click(function(){
+                if(add_input_count < max_input_fields){
+                    add_input_count++; 
+                    $(input_wrapper).append(new_input); 
+                }
+            });
+            $(input_wrapper).on('click', '.remove-input', function(e){
+                e.preventDefault();
+                $(this).parent().parent('div').remove();
+                add_input_count--;
+            });
+        });
+    </script>
+{% endblock %}
