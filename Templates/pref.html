@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Preferences
+{% endblock %}
+
+{% block main %}
+    <form action="/profile" method="post">
+            <div class="row justify-content-md-center">
+                <div class="col-2">
+                    <p class>Default Currency: </p>
+                </div>
+                <div class="col-2">
+                    <select class="form form-control mx-auto w-auto" name="currency" id="currency">
+                        {% for currency in currencies %}
+                            {% if currency|string() == defaultcurrency|string() %}
+                                <option value="{{ currency }}" selected>{{ currency }}</option>
+                            {% else %}
+                                <option value="{{ currency }}">{{ currency }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row justify-content-md-center">
+                <div class="col-2">
+                    <p>Budget: </p>
+                </div>
+                <div class="col-2">
+                    <input class="form-control" autocomplete="off" id="budget" name="budget" placeholder="0.00" type="number">      
+                </div>
+            </div>
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+{% endblock %}

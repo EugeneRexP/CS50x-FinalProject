@@ -15,7 +15,7 @@
         <form action="/graphs" method="post">
             {% for tag in tags %}                
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" id="{{ tag }}" name="{{ tag }}">
+                    <input class="form-check-input" type="checkbox" value="1" id="{{ tag }}" name="{{ tag }}" checked>
                     <label class="form-check-label" for="{{ tag }}">
                         {{ tag }}
                     </label>
@@ -26,8 +26,13 @@
         </form>
     </div>
     <div class="col-6">
-        {{ div|safe }}
+        {{ div_pie|safe }}
     </div>
+</div>
+<br>
+<br>
+<div class="row justify-content-center">
+    {{ div_bar | safe }}
 </div>
 
 {% endblock %}

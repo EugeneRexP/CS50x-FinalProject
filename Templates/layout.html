@@ -29,7 +29,7 @@
 
         <nav class="bg-light border navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><span class="blue">Final Project</span></a>
+                <a class="navbar-brand" href="/"><span class="blue">Expenses Tracker</span></a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -38,9 +38,7 @@
                         <ul class="navbar-nav me-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/input">Input</a></li>
                             <li class="nav-item"><a class="nav-link" href="/graphs">Graphs</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/sell">--</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/history">--</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/pref">Preferences</a></li>
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
@@ -55,13 +53,24 @@
             </div>
         </nav>
 
-        {% if get_flashed_messages() %}
-            <header>
-                <div class="alert alert-primary mb-0 text-center" role="alert">
-                    {{ get_flashed_messages() | join(" ") }}
-                </div>
-            </header>
-        {% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <header>
+                    {% for category, message in messages %}
+                        {% if category == "error" %}
+                            <div class="alert alert-danger mb-0 text-center" role="alert">
+                                {{ message }}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-primary mb-0 text-center" role="alert">
+                                {{ message }}
+                            </div>  
+                        {% endif %}
+                    {% endfor %}
+                </header>
+            {% endif %}
+        {% endwith %}
+
 
         <main class="container-fluid py-5 text-center">
             {% block main %}{% endblock %}
@@ -69,6 +78,8 @@
 
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://openexchangerates.org/">OpenExchangeRates</a>
+            <br>
+            Final project for CS50 by Eugene Rex Pacumio
         </footer>
 
     </body>

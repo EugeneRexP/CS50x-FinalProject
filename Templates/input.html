@@ -6,31 +6,35 @@
 
 {% block main %}
     <form action="/input" method="post">
+        <h4>Input expenses here:</h4>
+        <br>
         <div class="row">
-            <div class="col">
+            <div class="col-1">
+            </div>
+            <div class="col-1">
                 <input class="form-control" autofocus autocomplete="off" id="day" name="day" placeholder="Day" type="number" min="1" max="31">
             </div>
-            <div class="col">
-                <select class="form-control" name="month" id="month">
+            <div class="col-2">
+                <select class="form-control form-select" name="month" id="month">
                     {% for month in ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
                         <option value="{{ loop.index }}">{{ month }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="col">
-                <select class="form-control" name="year" id="year">
+            <div class="col-1">
+                <select class="form-control form-select" name="year" id="year">
                     {% for year in range(2023, 2026) %}
                         <option value="{{ year }}">{{ year }}</option>
                     {% endfor %}
                 </select>       
             </div>
-            <div class="col">
-                <input class="form-control" autocomplete="off" id="cost" name="cost" placeholder="Value (0.00)" type="number">      
+            <div class="col-1">
+                <input class="form-control" autocomplete="off" id="cost" name="cost" placeholder="Value" type="number" step=".01">      
             </div>
-            <div class="col">
-                <select class="form-control" name="currency" id="currency" default="{{ defaultcurrency }}">
+            <div class="col-1">
+                <select class="form-control form-select" name="currency" id="currency" default="{{ currencypref }}">
                     {% for currency in currencies %}
-                        {% if currency|string() == defaultcurrency|string() %}
+                        {% if currency|string() == currencypref|string() %}
                             <option value="{{ currency }}" selected>{{ currency }}</option>
                         {% else %}
                             <option value="{{ currency }}">{{ currency }}</option>
@@ -38,8 +42,18 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col">
-                <input class="form-control" autocomplete="off" id="tag" name="tag" placeholder="Tag" type="text">      
+            <div class="col-2">
+                <select class="form-control form-select" name="tag" id="tag">
+                    <option value="" selected disabled>Tag</option>
+                    {% for tag in tags %}
+                        <option value="{{ tag }}">{{ tag }}</option>
+                    {% endfor %}
+                </select>      
+            </div>
+            <div class="col-2">
+                <input class="form-control" autocomplete="off" id="remark" name="remark" placeholder="Remark" type="text">      
+            </div>
+            <div class="col-1">
             </div>
         </div>
         <br>
