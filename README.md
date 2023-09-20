@@ -65,7 +65,26 @@ Once successful, a pie chart and a bar chart is created and displayed using Boke
 
 ### Scripts:
 #### App.py:
+Main python file for various application functions:
+- index(): Provides functionality of the homepage (/index).
+- login(): Provides functionality of the login page (/login).
+- logout(): Clears userid from the session to "log out" the user.
+- register(): Provides functionality of the register page (/register).
+- input(): Provides functionality of the input page (/input).
+- delete(): Removes an entry from the expenses table using the delete button in the homepage.
+- graphs(): Provides functionality of the graphs page (/graphs).
+- pref(): Provides functionality of the preferences page (/pref).
+
 #### Helpers.py:
+Other useful functions are created here for readability of the main python file:
+- login_required(): Decorator function that redirects user to login if no user is logged in the session.
+- oex(): accesses an external API to save list of currencies and rates in  the session.
+- money(): simple filter for float with two decimal points.
+These three uses [Bokeh](https://docs.bokeh.org/en/latest/) to create graphs.
+- line(): accepts two lists to create a line graph. Returns a script and a div element.
+- pie(): accepts a dict of {name: value} pairs to create a pie chart. Returns a script and a div element.
+- bar(): accepts a separate dict of lists for the positive and negative values, as well as names for the stacks and axes to create a bar chart.
+
 #### Pyoxyr.py:
 This was directly lifted from a user-created script from Open Exchange Rates by [Github user massakai](https://github.com/massakai/pyoxr).
 Slight changes have been made by removing irrelevant parts.
