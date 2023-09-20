@@ -1,5 +1,5 @@
 # Expense Tracker
-### Video Demo:  <URL HERE>
+### Video Demo:  [Youtube link](https://youtu.be/3uoczzoUmpQ)
 ### Description:
 This is a web-based application that uses Python, JavaScript, SQL with Flask and Jinja templating.
 
@@ -55,6 +55,8 @@ This is where all the entries from the input page are displayed. The entries are
 These entries are then separated by month into individual accordions which can be opened by simply clicking. With each entry, a delete button is also created in the same row. Pressing the button permanently removes the entry from the database.
 
 Incorporating Bokeh, a simple line graph is also displayed here. This takes the total amount of expenses incurred per month and plots that agains the months, basically creating a comparison of how much has been spent for each month. Note that this graph does not account for incoming cash.
+
+At the top is a budget tracker, which computes how much of the allocated budget is left after deducting the expenses for the current month.
 
 #### Graphs:
 The more complicated and informative graphs are created here. It is important to note that the page cannot be accessed when there is not enough entries from the input page. Specifically, there needs to be, at minimum, entries with three different tags, excluding "CASH IN".
