@@ -31,7 +31,7 @@ def oex():
 def line(x, y):
     """ Generate Line Graph """
     # Create plot
-    p = figure(title="Monthly Expenses", x_axis_label='month', y_axis_label='expense')
+    p = figure(title="Monthly Expenses", x_axis_label='month', y_axis_label='expense', toolbar_location=None)
     
     # Add line
     p.line(x, y, line_width=2)

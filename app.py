@@ -113,7 +113,7 @@ def login():
         oex()
 
         # Redirect to input
-        return redirect("/input")
+        return redirect("/")
 
     # Request via GET
     else:
@@ -168,7 +168,7 @@ def register():
         id = db.execute("SELECT id FROM users WHERE username = ?", username)
         session["user_id"] = id
         oex()
-        return redirect("/profile")
+        return redirect("/pref")
 
     # Request via GET
     return render_template("register.html", currencies=currencies)
@@ -307,18 +307,6 @@ def graphs():
     return render_template("graphs.html", script=script, div_pie=div_pie, div_bar=div_bar, tags=tags)
 
 
-@app.route("/split", methods=["GET", "POST"])
-@login_required
-def split():
-    """To be implemented"""
-    
-    if request.method == 'POST':
-        skills = request.form.getlist('field[]')
-        print(skills)
-        
-    return render_template("split.html")
-
-
 @app.route("/pref", methods=["GET", "POST"])
 @login_required
 def pref():
@@ -327,24 +315,38 @@ def pref():
     userid = session.get("user_id")
     if not isinstance(userid, int):
         userid = userid[0]["id"]
+    # Query default currency
+    currencypref = db.execute("SELECT currency FROM users WHERE id = ?", userid)[0]["currency"]
     
     # Prepare list of currencies    
     currencies = session.get('currencies')
+    rates = session.get('rates')
     
     # Request via POST
     if request.method == 'POST':
         currency = request.form.get('currency')
         budget = request.form.get('budget')
 
+        # Convert table
+        if currency != currencypref:
+            conversion = float(rates[currency]) / rates[currencypref]
+            expenses = db.execute("SELECT refid, cost FROM expenses WHERE userid = ?", userid)
+            try:
+                for expense in expenses:
+                    converted = expense['cost'] * conversion
+                    db.execute("UPDATE expenses SET cost = ? WHERE refid = ?", converted, expense['refid'])
+            except:
+                print('error')
+                
         # Insert into db
+        flash("Preferences updated")
         db.execute("UPDATE users SET currency = ?, budget = ? WHERE id = ?", currency, budget, userid)
         
         # TODO: Convert expenses table 
         return redirect("/input")
     
     # Request via GET    
-    defaultcurrency = db.execute("SELECT currency FROM users WHERE id = ?", userid)[0]["currency"]    
-    return render_template("pref.html", currencies=currencies, defaultcurrency=defaultcurrency)
+    return render_template("pref.html", currencies=currencies, currencypref=currencypref)
 
 
 if __name__ == "__main__":
